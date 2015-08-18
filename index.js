@@ -2,8 +2,7 @@ var fs     = require('fs');
 var assert = require('assert');
 var path   = require('path');
 
-function markerExists (files) {
-  var markers = module.exports.ROOT_MARKERS;
+function markerExists (files, markers) {
   return markers.some(function(marker) {
     return files.some(function (file) {
       return file === marker;
@@ -11,18 +10,24 @@ function markerExists (files) {
   });
 }
 
-function findRoot (directory, runs) {
+function traverseFolder (directory, levels, markers) {
   assert(directory, "Directory not defined");
   var files = fs.readdirSync(directory);
-  if (runs >= module.exports.MAX_LEVELS) {
+  if (levels === 0) {
     return null;
-  } else if (markerExists(files)) {
+  } else if (markerExists(files, markers)) {
     return directory;
   } else {
-    return findRoot(path.resolve(directory, '..'), runs + 1);
+    return traverseFolder(path.resolve(directory, '..'), levels - 1, markers);
   }
 }
 
-module.exports = function(dir) { return findRoot(dir, 0); };
-module.exports.MAX_LEVELS = 3;
-module.exports.ROOT_MARKERS = [ '.git' ];
+module.exports = function findRoot(dir, opts) { 
+  opts = opts || {};
+  var levels  = opts.maxDepth || findRoot.MAX_DEPTH;
+  var markers = opts.markers  || findRoot.MARKERS;
+  return traverseFolder(dir, levels, markers); 
+};
+
+module.exports.MAX_DEPTH = 9;
+module.exports.MARKERS   = [ '.git', '.hg' ];

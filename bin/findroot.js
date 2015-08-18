@@ -4,6 +4,6 @@ var root     = findRoot(process.cwd());
 
 if (root) {
   console.log(root);
-  process.exit(0);
+} else {
+  process.exit(1);
 } 
-process.exit(1);

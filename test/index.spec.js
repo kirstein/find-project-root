@@ -41,10 +41,43 @@ describe("findRoot", function() {
     var stub = this.stub(fs, 'readdirSync');
     stub.onCall(0).returns([]);
     stub.onCall(1).returns([]);
-    stub.onCall(2).returns([]);
-    stub.onCall(3).returns([]);
-    var result = findRoot('test');
+    var result = findRoot('test', {maxDepth: 2});
     assert(result === null);
   }));
+
+  it("should search for custom markers", sinon.test(function() {
+    this.stub(fs, 'readdirSync').returns([ 'balls' ]);
+    assert(findRoot("test", { markers: [ 'balls' ] }));
+  }));
+
+  describe("default values", function() {
+    beforeEach(function() {
+      this.maxDepth = findRoot.MAX_DEPTH;
+      this.markers  = findRoot.MARKERS;
+    });
+
+    afterEach(function() {
+      findRoot.MAX_DEPTH = this.maxDepth;
+      findRoot.MARKERS   = this.markers;
+    });
+
+    it("should return null if looping goes too deep", function() {
+      findRoot.MAX_DEPTH = 0;
+      assert(findRoot.MAX_DEPTH === 0);
+    });
+
+    it("should not find anything if max depth is 0", sinon.test(function() {
+      findRoot.MAX_DEPTH = 0;
+      this.stub(fs, 'readdirSync').returns([ '.git' ]);
+      assert(findRoot("test") === null);
+    }));
+
+    it("should allow overriding default markers", sinon.test(function() {
+      findRoot.MARKERS = [ "honeybadger" ];
+      this.stub(fs, 'readdirSync').returns([ "honeybadger" ]);
+      assert(findRoot("test"));
+    }));
+
+  });
 
 });
