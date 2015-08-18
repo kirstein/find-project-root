@@ -7,7 +7,7 @@
     "find-project-root": "./bin/find-project-root.js"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "author": "kirstein",
   "license": "ISC",
