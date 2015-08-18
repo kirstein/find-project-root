@@ -4,7 +4,7 @@
   "description": "Finds project root",
   "main": "index.js",
   "bin": {
-    "findroot": "./bin/findroot.js"
+    "find-project-root": "./bin/find-project-root.js"
   },
   "scripts": {
     "test": "mocha"
