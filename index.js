@@ -4,7 +4,7 @@ var path   = require('path');
 
 function markerExists (files, markers) {
   return markers.some(function(marker) {
-    return files.some(function (file) {
+    return files.some(function(file) {
       return file === marker;
     });
   });
