@@ -11,7 +11,6 @@ function markerExists (files, markers) {
 }
 
 function traverseFolder (directory, levels, markers) {
-  assert(directory, "Directory not defined");
   var files = fs.readdirSync(directory);
   if (levels === 0) {
     return null;
@@ -23,6 +22,7 @@ function traverseFolder (directory, levels, markers) {
 }
 
 module.exports = function findRoot(dir, opts) { 
+  if (!dir) throw new Error("Directory not defined");
   opts = opts || {};
   var levels  = opts.maxDepth || findRoot.MAX_DEPTH;
   var markers = opts.markers  || findRoot.MARKERS;
