@@ -1,0 +1,18 @@
+{
+  "name": "find-project-root",
+  "version": "1.0.0",
+  "description": "Finds project root",
+  "main": "index.js",
+  "bin": {
+    "findroot": "./bin/findroot.js"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "kirstein",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "sinon": "^1.15.4"
+  }
+}
