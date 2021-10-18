@@ -6,6 +6,10 @@
   "bin": {
     "find-project-root": "./bin/find-project-root.js"
   },
+  "repository": {	
+    "type": "git",
+    "url": "https://github.com/kirstein/find-project-root.git"
+  },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha"
   },
